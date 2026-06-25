@@ -1,3 +1,1 @@
-Test
-
-I used to believe
+Testing text
