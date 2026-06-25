@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: KennuC.github.io/kblog
+  baseUrl: KennuC.github.io/KBlog
   ignorePatterns:
     - private
     - templates
