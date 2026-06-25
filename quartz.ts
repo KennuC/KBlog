@@ -14,8 +14,7 @@ ExternalPlugin.RecentNotes({
   linkToMore: false,
   hideTagPages: true,
   hideFolderPages: true,
-  filter: (f) => !f.slug?.includes("index"),
-  filter: (f) => f.slug !== "404",
+  filter: (f) => f.slug !== "404" && f.frontmatter?.title !== "Not Found",
 });
 
 ExternalPlugin.Explorer({
