@@ -222,7 +222,7 @@ plugins:
     options:
       links:
         LinkedIn: https://www.linkedin.com/in/kennuchallenger/
-	GitHub: https://github.com/KennuC
+        GitHub: https://github.com/KennuC
   - source: github:quartz-community/recent-notes
     enabled: true
     options:
