@@ -21,5 +21,5 @@ ExternalPlugin.Explorer({
   folderDefaultState: "open",
   folderClickBehavior: "link",
   useSavedState: true,
-  filterFn: (node) => !["tags", "404"].includes(node.name?.toLowerCase() ?? ""),
+  filterFn: (node) => node.name !== "404",
 });
