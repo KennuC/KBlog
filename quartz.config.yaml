@@ -139,6 +139,11 @@ plugins:
     enabled: true
   - source: github:quartz-community/explorer
     enabled: true
+    options:
+      excludePatterns:
+        - "404"
+        - "tags"
+        - "tag-index"
     layout:
       position: left
       priority: 50
@@ -226,10 +231,13 @@ plugins:
   - source: github:quartz-community/recent-notes
     enabled: true
     options:
-      title: Recent Notes
+      title: Recent Writeups
       limit: 5
       linkToMore: false
       showTags: true
+      filter:
+        folders:
+          - Writeups
     layout:
       position: left
       priority: 25
