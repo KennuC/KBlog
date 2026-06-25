@@ -235,9 +235,6 @@ plugins:
       limit: 5
       linkToMore: false
       showTags: true
-      filter:
-        folders:
-          - Writeups
     layout:
       position: left
       priority: 25
