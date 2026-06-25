@@ -15,6 +15,7 @@ ExternalPlugin.RecentNotes({
   hideTagPages: true,
   hideFolderPages: true,
   filter: (f) => !f.slug?.includes("index"),
+  filter: (f) => f.slug !== "404",
 });
 
 ExternalPlugin.Explorer({

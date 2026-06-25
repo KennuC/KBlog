@@ -237,10 +237,6 @@ plugins:
       showTags: true
       hideTagPages: true
       hideFolderPages: true
-      filter:
-        slugs:
-          exclude:
-            - "404"
     layout:
       position: left
       priority: 25
