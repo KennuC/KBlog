@@ -21,5 +21,5 @@ ExternalPlugin.Explorer({
   folderDefaultState: "open",
   folderClickBehavior: "link",
   useSavedState: true,
-  filterFn: (node) => node.name !== "404",
+  filterFn: (node) => node.slugSegment !== "404" && node.slugSegment !== "tags",
 });
