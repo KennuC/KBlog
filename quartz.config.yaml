@@ -226,8 +226,8 @@ plugins:
     enabled: true
     options:
       links:
-        LinkedIn: https://www.linkedin.com/in/kennuchallenger/
-        GitHub: https://github.com/KennuC
+        My LinkedIn: https://www.linkedin.com/in/kennuchallenger/
+        My GitHub: https://github.com/KennuC
   - source: github:quartz-community/recent-notes
     enabled: true
     options:
