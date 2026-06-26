@@ -2,8 +2,8 @@
 	"nodes":[
 		{"id":"c3ce11467dd39f5d","type":"text","text":"[[Nmap]]","x":-640,"y":-680,"width":250,"height":50},
 		{"id":"a984d549069ced48","type":"text","text":"[[Web Enumeration]]","x":-640,"y":-460,"width":250,"height":60},
-		{"id":"c39738335ee3fefa","x":-384,"y":-609,"width":250,"height":60,"type":"text","text":"Nmap"},
-		{"id":"08c4eecca8e0fe83","x":-336,"y":-440,"width":250,"height":60,"type":"text","text":"Web Enumeration"}
+		{"id":"c39738335ee3fefa","type":"text","text":"Nmap","x":-384,"y":-609,"width":250,"height":60},
+		{"id":"08c4eecca8e0fe83","type":"text","text":"Web Enumeration","x":-336,"y":-440,"width":250,"height":60}
 	],
 	"edges":[
 		{"id":"fa066d6dcda5377c","fromNode":"c3ce11467dd39f5d","fromSide":"bottom","toNode":"a984d549069ced48","toSide":"top"}
