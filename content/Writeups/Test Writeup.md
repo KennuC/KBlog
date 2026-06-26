@@ -15,7 +15,7 @@ echo $RHOST
 
 Test image
 
-[[Test Canvas.canvas]]
+![[Test Canvas.canvas]]
 
 
 
