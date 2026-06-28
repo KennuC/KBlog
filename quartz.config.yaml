@@ -12,8 +12,6 @@ configuration:
     - private
     - templates
     - .obsidian
-    - assets
-    - "**/assets"
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
