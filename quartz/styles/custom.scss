@@ -1,3 +1,333 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+$amber: #d4a24e;
+$coral: #cf6679;
+
+
+html {
+  background: #0d0d0d;
+  color: #ebebec;
+}
+
+article .article-title h1,
+h1.article-title {
+  color: #39ff14;
+  border-left: none;
+  padding-left: 0;
+}
+
+h1.article-title::after {
+  content: "_";
+  color: #39ff14;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+article h1 {
+  color: #39ff14;
+  font-weight: 700;
+  font-size: 1.8em;       // adjust to your existing scale
+  border-left: 4px solid #39ff14;
+  padding-left: 0.5em;
+}
+article h2 {
+  color: #2ee619;
+  font-weight: 700;
+  font-size: 1.5em;
+  border-left: 3px solid #2ee619;
+  padding-left: 0.5em;
+}
+article h3 {
+  color: #52b788;
+  font-weight: 600;
+  font-size: 1.25em;
+  border-left: 2px solid #52b788;
+  padding-left: 0.5em;
+}
+article h4 {
+  color: #3d9970;
+  font-weight: 600;
+  font-size: 1.1em;
+  border-left: 1px solid #3d9970;
+  padding-left: 0.5em;
+}
+
+.sidebar {
+  h1, h2, h3 {
+    color: #52b788;
+    font-weight: 600;
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-left: 2px solid #52b788;
+    padding-left: 0.5em;
+    margin-bottom: 0.6em;
+  }
+}
+
+.sidebar h1::before,
+.sidebar h2::before {
+  content: "▸ ";
+  color: #39ff14;
+}
+
+.sidebar a {
+  font-family: var(--codeFont, monospace);
+  transition: color 0.15s ease;
+}
+.sidebar a:hover {
+  color: #39ff14;
+  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+}
+
+.sidebar input[type="search"],
+.sidebar input[type="text"] {
+  background: #131f1a;
+  border: 1px solid #263831;
+  color: #ebebec;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.sidebar input:focus {
+  border-color: #52b788;
+  box-shadow: 0 0 4px rgba(82, 183, 136, 0.4);
+  outline: none;
+}
+
+.sidebar .meta, .sidebar time {
+  font-family: var(--codeFont, monospace);
+  font-size: 0.85em;   // was 0.8em
+  color: #8a8a8a;        // was #646464 — lighter, still clearly secondary to the title above it
+}
+
+a {
+  color: #52b788;
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+
+code { color: var(--tertiary); }
+
+pre {
+  background: #0a0e27;
+  border-left: 3px solid #52b788;
+  overflow-x: auto;
+  white-space: pre; // forces scroll instead of wrap
+}
+pre code {
+  background: transparent;
+  white-space: inherit;
+}
+
+p code, li code, blockquote code {
+  color: #52b788;           // was var(--tertiary) — drop to the mid-green, matches h3/h4 tier now  
+  background: #1a2620;   
+  border-radius: 4px;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+blockquote {
+  border-left: 3px solid #52b788;
+  color: #74c69d;
+}
+
+strong { color: var(--tertiary); }
+
+::selection { background: #39ff14; color: #161618; }
+
+em {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  color: #ebebec;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  opacity: 0.8;
+}
+
+a:hover {
+  color: #39ff14;
+  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+}
+a:focus-visible {
+  color: #39ff14;
+  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+}
+
+.callout {
+  background: color-mix(in srgb, var(--callout-color, #52b788) 8%, #0d0d0d);
+  border: 1px solid color-mix(in srgb, var(--callout-color, #52b788) 25%, #0d0d0d);
+  border-left: 4px solid var(--callout-color, #52b788);
+  border-radius: 4px;
+  padding: 0.75em 1em;
+  color: #ebebec;
+}
+
+// Per-type color, set once as a variable, reused for border/title/links/code
+.callout[data-callout="note"] {
+  --color: #52b788;
+  --callout-color: #52b788; 
+}
+.callout[data-callout="warning"],
+.callout[data-callout="caution"] {
+  --color: #{$amber};
+  --callout-color: #{$amber};
+}
+.callout[data-callout="danger"] {
+  --color: #{$coral};
+  --callout-color: #{$coral};
+}
+
+
+
+.callout {
+  border-left-color: var(--callout-color, #52b788); // falls back to green if type unset
+}
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-weight: 700;
+  color: var(--callout-color, var(--secondary)) !important;
+  margin-bottom: 0.4em;
+}
+
+
+.callout-content p { margin: 0.3em 0; }
+
+.callout code {
+  color: var(--callout-color, #ebebec);
+  background: rgba(255, 255, 255, 0.06); // neutral translucent chip, works across all callout colors
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.callout a {
+  color: var(--callout-color, #52b788);
+}
+.callout a:hover {
+  color: #ebebec; // brightens to neutral white on hover, still readable against any callout color
+  text-shadow: none;
+}
+.callout a:focus-visible {
+  color: #ebebec; // brightens to neutral white on hover, still readable against any callout color
+  text-shadow: none;
+}
+
+// Target the index page specifically — check devtools for the exact body/page class,
+// often something like body[data-slug="index"] or .index-page in Quartz
+body[data-slug="index"] {
+  .callout[data-callout="note"] {
+    // make the whoami block feel like a hero element, bigger presence than inline writeup callouts
+    max-width: 600px;
+    margin: 1.5em auto;
+    box-shadow: 0 0 24px rgba(57, 255, 20, 0.08);
+  }
+
+  h1.article-title {
+    text-align: center;
+    font-size: 2.2em;
+  }
+}
+
+.featured-writeup {
+  display: block;
+  background: #131f1a;
+  border: 1px solid #263831;
+  border-left: 3px solid #52b788;
+  border-radius: 4px;
+  padding: 0.8em 1em;
+  margin-bottom: 0.6em;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.featured-writeup:hover {
+  border-left-color: #39ff14;
+  background: #16241d;
+}
+
+// Animated scanline/glow effect for the hero terminal block
+.callout[data-callout="note"] {
+  position: relative;
+  overflow: hidden;
+}
+
+body[data-slug="index"] .callout[data-callout="note"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(57, 255, 20, 0.03) 50%,
+    transparent 100%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+// Skill/tool badges for the index page
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin: 1em 0;
+}
+
+.badge {
+  font-family: var(--codeFont, monospace);
+  font-size: 0.8em;
+  padding: 0.25em 0.7em;
+  border: 1px solid #52b788;
+  border-radius: 3px;
+  color: #52b788;
+  background: rgba(82, 183, 136, 0.08);
+  transition: all 0.15s ease;
+}
+.badge:hover {
+  border-color: #39ff14;
+  color: #39ff14;
+  box-shadow: 0 0 6px rgba(57, 255, 20, 0.3);
+}
+
+// Progress bar for CPTS / cert tracking
+.progress-track {
+  background: #131f1a;
+  border: 1px solid #263831;
+  border-radius: 4px;
+  height: 10px;
+  overflow: hidden;
+  margin: 0.4em 0 1em 0;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #52b788, #39ff14);
+  box-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
+}
+
+// Bigger hover lift on featured writeups
+.featured-writeup {
+  transform: translateY(0);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.featured-writeup:hover {
+  transform: translateY(-2px);
+}
+
+// Section dividers, ASCII-style
+.hr-ascii {
+  text-align: center;
+  color: #263831;
+  font-family: var(--codeFont, monospace);
+  letter-spacing: 0.3em;
+  margin: 2em 0;
+  user-select: none;
+}
+
