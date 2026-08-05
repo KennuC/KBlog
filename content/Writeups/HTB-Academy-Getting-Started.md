@@ -8,7 +8,7 @@ draft: false
 > 
 > `LHOST` : Local Host (Attacker Machine)
 > 
-> `RHOST`: Remote Host (Victim Machine)
+> `RHOST`: Remote Host (Target Machine)
 # Overview
 
 This is box was part of HTB's Getting Started Module from the HTB CPTS Learning path.

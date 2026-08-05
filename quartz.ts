@@ -1,10 +1,4 @@
 import { loadQuartzConfig, loadQuartzLayout } from "./quartz/plugins/loader/config-loader"
-
-const config = await loadQuartzConfig()
-export default config
-export const layout = await loadQuartzLayout()
-
-
 import * as ExternalPlugin from "./.quartz/plugins";
 
 ExternalPlugin.RecentNotes({
@@ -23,3 +17,7 @@ ExternalPlugin.Explorer({
   useSavedState: true,
   filterFn: (node) => node.slugSegment !== "404" && node.slugSegment !== "assets",
 });
+
+const config = await loadQuartzConfig()
+export default config
+export const layout = await loadQuartzLayout()

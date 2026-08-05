@@ -3,12 +3,117 @@
 $amber: #d4a24e;
 $coral: #cf6679;
 
-
-html {
-  background: #0d0d0d;
-  color: #ebebec;
+// ============================================================================
+// Terminal Window (used on index page)
+// ============================================================================
+.terminal-window {
+  position: relative;
+  background: #0a0e27;
+  border: 1px solid #263831;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2em;
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.06), 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.5em 0.9em;
+  background: #0e1420;
+  border-bottom: 1px solid #1c2b24;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+
+  i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+  }
+  i:nth-child(1) { background: #ff5f56; }
+  i:nth-child(2) { background: #ffbd2e; }
+  i:nth-child(3) { background: #27c93f; }
+}
+
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--codeFont, monospace);
+  font-size: 0.75em;
+  color: #74c69d;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.terminal-intro {
+  position: relative;
+  padding: 1em 1.2em;
+  font-family: var(--codeFont, monospace);
+  font-size: 0.95em;
+  line-height: 1.7;
+  color: #39ff14;
+
+  .prompt { color: #74c69d; }
+  .path { color: #52b788; }
+  .output { color: #ebebec; }
+  .cursor {
+    color: #39ff14;
+    animation: blink 1s step-end infinite;
+  }
+
+  br {
+    display: block;
+    content: "";
+    margin-bottom: 0.25em;
+  }
+}
+
+// Scanline sweep over terminal window (guarded by prefers-reduced-motion)
+.terminal-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(57, 255, 20, 0.04) 50%,
+    transparent 100%
+  );
+  background-size: 100% 4px;
+  animation: scanline 8s linear infinite;
+}
+
+// ============================================================================
+// Animations (guarded by prefers-reduced-motion)
+// ============================================================================
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes scanline {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100px; }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-window::after {
+    animation: none;
+  }
+}
+
+// ============================================================================
+// Article Title (with blinking cursor)
+// ============================================================================
 article .article-title h1,
 h1.article-title {
   color: #39ff14;
@@ -21,12 +126,11 @@ h1.article-title::after {
   color: #39ff14;
   animation: blink 1s step-end infinite;
 }
-@keyframes blink { 50% { opacity: 0; } }
 
 article h1 {
   color: #39ff14;
   font-weight: 700;
-  font-size: 1.8em;       // adjust to your existing scale
+  font-size: 1.8em;
   border-left: 4px solid #39ff14;
   padding-left: 0.5em;
 }
@@ -52,6 +156,9 @@ article h4 {
   padding-left: 0.5em;
 }
 
+// ============================================================================
+// Sidebar Styles
+// ============================================================================
 .sidebar {
   h1, h2, h3 {
     color: #52b788;
@@ -59,16 +166,17 @@ article h4 {
     font-size: 1em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    border-left: 2px solid #52b788;
-    padding-left: 0.5em;
+    border-bottom: 1px solid rgba(82, 183, 136, 0.6);
+    padding-bottom: 0.25em;
     margin-bottom: 0.6em;
   }
-}
 
-.sidebar h1::before,
-.sidebar h2::before {
-  content: "▸ ";
-  color: #39ff14;
+  h1::before,
+  h2::before,
+  h3::before {
+    content: "~ ";
+    color: #39ff14;
+  }
 }
 
 .sidebar a {
@@ -78,6 +186,13 @@ article h4 {
 .sidebar a:hover {
   color: #39ff14;
   text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+}
+.sidebar a:focus-visible {
+  color: #39ff14;
+  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+  outline: 2px solid #39ff14;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .sidebar input[type="search"],
@@ -95,35 +210,142 @@ article h4 {
 
 .sidebar .meta, .sidebar time {
   font-family: var(--codeFont, monospace);
-  font-size: 0.85em;   // was 0.8em
-  color: #8a8a8a;        // was #646464 — lighter, still clearly secondary to the title above it
+  font-size: 0.85em;
+  color: #8a8a8a;
 }
 
+// ============================================================================
+// Recent Notes Sidebar - Hover/Focus States
+// ============================================================================
+.recent-notes {
+  .recent-ul {
+    counter-reset: recent;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .recent-li h3 {
+    text-transform: none;
+    letter-spacing: normal;
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+
+    &::before {
+      content: none;
+    }
+  }
+
+  .recent-li {
+    counter-increment: recent;
+    display: flex;
+    gap: 0.4rem;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    margin: 0.25rem 0;
+
+    &::before {
+      content: "[" counter(recent, decimal-leading-zero) "]";
+      color: #52b788;
+      font-family: var(--codeFont, monospace);
+      flex: 0 0 auto;
+    }
+
+    &:hover {
+      box-shadow: inset 2px 0 0 0 #39ff14;
+    }
+
+    &:focus-within {
+      outline: 2px solid #39ff14;
+      outline-offset: 2px;
+    }
+
+    a {
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: #39ff14;
+      text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+    }
+
+    a:focus-visible {
+      color: #39ff14;
+      text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+      outline: 2px solid #39ff14;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  .meta time {
+    transition: opacity 0.15s ease;
+  }
+
+  .recent-li:hover .meta time {
+    opacity: 1;
+  }
+}
+
+// ============================================================================
+// Links
+// ============================================================================
 a {
   color: #52b788;
   transition: color 0.15s ease, text-shadow 0.15s ease;
 }
 
-
-code { color: var(--tertiary); }
-
-pre {
-  background: #0a0e27;
-  border-left: 3px solid #52b788;
-  overflow-x: auto;
-  white-space: pre; // forces scroll instead of wrap
+a:hover {
+  color: #39ff14;
+  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
 }
+a:focus-visible {
+  color: #39ff14;
+  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+}
+
+// ============================================================================
+// Code Blocks
+// ============================================================================
+code {
+  color: var(--tertiary);
+}
+
+// Base pre styling
+pre {
+  background: #131f1a;
+  border-left: 3px solid #52b788;
+  border-radius: 6px;
+  overflow-x: auto;
+  white-space: pre;
+  position: relative;
+  padding: 1rem;
+}
+
+// Vertically center plugin clipboard button (it defaults to top-right)
+pre .clipboard-button {
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+}
+
 pre code {
   background: transparent;
   white-space: inherit;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  display: block;
+  padding: 0;
 }
 
 p code, li code, blockquote code {
-  color: #52b788;           // was var(--tertiary) — drop to the mid-green, matches h3/h4 tier now  
-  background: #1a2620;   
+  color: #52b788;
+  background: #1a2620;
   border-radius: 4px;
   font-size: 0.9em;
   white-space: nowrap;
+  padding: 0.1rem 0.3rem;
 }
 
 blockquote {
@@ -146,15 +368,9 @@ em {
   opacity: 0.8;
 }
 
-a:hover {
-  color: #39ff14;
-  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
-}
-a:focus-visible {
-  color: #39ff14;
-  text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
-}
-
+// ============================================================================
+// Callouts
+// ============================================================================
 .callout {
   background: color-mix(in srgb, var(--callout-color, #52b788) 8%, #0d0d0d);
   border: 1px solid color-mix(in srgb, var(--callout-color, #52b788) 25%, #0d0d0d);
@@ -167,7 +383,7 @@ a:focus-visible {
 // Per-type color, set once as a variable, reused for border/title/links/code
 .callout[data-callout="note"] {
   --color: #52b788;
-  --callout-color: #52b788; 
+  --callout-color: #52b788;
 }
 .callout[data-callout="warning"],
 .callout[data-callout="caution"] {
@@ -179,10 +395,8 @@ a:focus-visible {
   --callout-color: #{$coral};
 }
 
-
-
 .callout {
-  border-left-color: var(--callout-color, #52b788); // falls back to green if type unset
+  border-left-color: var(--callout-color, #52b788);
 }
 .callout-title {
   display: flex;
@@ -193,12 +407,11 @@ a:focus-visible {
   margin-bottom: 0.4em;
 }
 
-
 .callout-content p { margin: 0.3em 0; }
 
 .callout code {
   color: var(--callout-color, #ebebec);
-  background: rgba(255, 255, 255, 0.06); // neutral translucent chip, works across all callout colors
+  background: rgba(255, 255, 255, 0.06);
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.9em;
@@ -208,19 +421,19 @@ a:focus-visible {
   color: var(--callout-color, #52b788);
 }
 .callout a:hover {
-  color: #ebebec; // brightens to neutral white on hover, still readable against any callout color
+  color: #ebebec;
   text-shadow: none;
 }
 .callout a:focus-visible {
-  color: #ebebec; // brightens to neutral white on hover, still readable against any callout color
+  color: #ebebec;
   text-shadow: none;
 }
 
-// Target the index page specifically — check devtools for the exact body/page class,
-// often something like body[data-slug="index"] or .index-page in Quartz
+// ============================================================================
+// Index Page Specific
+// ============================================================================
 body[data-slug="index"] {
   .callout[data-callout="note"] {
-    // make the whoami block feel like a hero element, bigger presence than inline writeup callouts
     max-width: 600px;
     margin: 1.5em auto;
     box-shadow: 0 0 24px rgba(57, 255, 20, 0.08);
@@ -232,48 +445,9 @@ body[data-slug="index"] {
   }
 }
 
-.featured-writeup {
-  display: block;
-  background: #131f1a;
-  border: 1px solid #263831;
-  border-left: 3px solid #52b788;
-  border-radius: 4px;
-  padding: 0.8em 1em;
-  margin-bottom: 0.6em;
-  transition: border-color 0.15s ease, background 0.15s ease;
-}
-.featured-writeup:hover {
-  border-left-color: #39ff14;
-  background: #16241d;
-}
-
-// Animated scanline/glow effect for the hero terminal block
-.callout[data-callout="note"] {
-  position: relative;
-  overflow: hidden;
-}
-
-body[data-slug="index"] .callout[data-callout="note"]::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(57, 255, 20, 0.03) 50%,
-    transparent 100%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
-  animation: scanline 8s linear infinite;
-}
-
-@keyframes scanline {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 100px; }
-}
-
-// Skill/tool badges for the index page
+// ============================================================================
+// Badge Row
+// ============================================================================
 .badge-row {
   display: flex;
   flex-wrap: wrap;
@@ -297,7 +471,9 @@ body[data-slug="index"] .callout[data-callout="note"]::before {
   box-shadow: 0 0 6px rgba(57, 255, 20, 0.3);
 }
 
-// Progress bar for CPTS / cert tracking
+// ============================================================================
+// Progress Track
+// ============================================================================
 .progress-track {
   background: #131f1a;
   border: 1px solid #263831;
@@ -310,18 +486,67 @@ body[data-slug="index"] .callout[data-callout="note"]::before {
   height: 100%;
   background: linear-gradient(90deg, #52b788, #39ff14);
   box-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
+  transition: width 0.5s ease;
 }
 
-// Bigger hover lift on featured writeups
+// ============================================================================
+// Writeup Card Grid
+// ============================================================================
+.writeup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.75em;
+  margin: 1em 0;
+}
+
 .featured-writeup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  background: #131f1a;
+  border: 1px solid #263831;
+  border-left: 3px solid #52b788;
+  border-radius: 6px;
+  padding: 0.9em 1em;
+  margin-bottom: 0;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
   transform: translateY(0);
-  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
-}
-.featured-writeup:hover {
-  transform: translateY(-2px);
+
+  strong {
+    color: #ebebec;
+    font-size: 1.05em;
+  }
 }
 
-// Section dividers, ASCII-style
+.featured-writeup:hover {
+  border-left-color: #39ff14;
+  border-color: #3a5a4a;
+  background: #16241d;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 18px rgba(57, 255, 20, 0.12);
+}
+.featured-writeup:focus-visible {
+  outline: 2px solid #39ff14;
+  outline-offset: 2px;
+}
+
+.writeup-type {
+  font-family: var(--codeFont, monospace);
+  font-size: 0.68em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #74c69d;
+}
+
+.writeup-desc {
+  font-size: 0.85em;
+  color: #8a8a8a;
+}
+
+// ============================================================================
+// Section Dividers
+// ============================================================================
 .hr-ascii {
   text-align: center;
   color: #263831;
@@ -331,3 +556,141 @@ body[data-slug="index"] .callout[data-callout="note"]::before {
   user-select: none;
 }
 
+// ============================================================================
+// Table Styling
+// ============================================================================
+.table-container > table {
+  border: 1px solid #263831;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th {
+  background: #131f1a;
+  border-bottom: 2px solid #52b788;
+  color: #39ff14;
+  font-family: var(--codeFont, monospace);
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  border-bottom: 1px solid #263831;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background: rgba(82, 183, 136, 0.05);
+}
+
+// ============================================================================
+// Atmosphere & Chrome
+// ============================================================================
+body {
+  background-color: #0b0b0d;
+  background-image:
+    radial-gradient(1100px 480px at 50% -10%, rgba(57, 255, 20, 0.05), transparent 60%),
+    linear-gradient(rgba(57, 255, 20, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.015) 1px, transparent 1px);
+  background-size: auto, 32px 32px, 32px 32px;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #0b0b0d;
+}
+*::-webkit-scrollbar-thumb {
+  background: #263831;
+  border-radius: 5px;
+  border: 2px solid #0b0b0d;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #52b788;
+}
+
+// Header brand reads as terminal prompt
+.page-title {
+  font-family: var(--codeFont, monospace);
+
+  &::before {
+    content: "kennu@kali:~$ ";
+    color: #52b788;
+  }
+}
+
+.page-header {
+  border-bottom: 1px solid #1c2b24;
+}
+
+// Breadcrumbs as terminal path
+.breadcrumb-container {
+  font-family: var(--codeFont, monospace);
+  font-size: 0.85em;
+
+  .breadcrumb-element {
+    color: #8a8a8a;
+
+    p {
+      color: #3a5a4a;
+    }
+
+    a {
+      color: #52b788;
+
+      &:hover {
+        color: #39ff14;
+        text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+      }
+    }
+  }
+}
+
+// Right sidebar: TOC + backlinks
+.toc {
+  border-left: 1px solid #1c2b24;
+
+  .toc-header {
+    font-family: var(--codeFont, monospace);
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #52b788;
+  }
+}
+
+// Sidebar sections
+.left.sidebar,
+.right.sidebar {
+  font-size: 0.95em;
+
+  > * + * {
+    margin-top: 1.6em;
+  }
+}
+
+// Footer
+.page-footer {
+  border-top: 1px solid #1c2b24;
+  font-family: var(--codeFont, monospace);
+  font-size: 0.8em;
+  color: #8a8a8a;
+}
+
+// Article typography polish
+article {
+  .article-title {
+    font-size: 2em;
+  }
+
+  p,
+  li {
+    line-height: 1.75;
+  }
+}
