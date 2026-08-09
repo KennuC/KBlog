@@ -194,6 +194,9 @@ plugins:
       group: toolbar
   - source: github:quartz-community/breadcrumbs
     enabled: true
+    options:
+      spacerSymbol: "/"
+      rootName: "~"
     layout:
       position: beforeBody
       priority: 5

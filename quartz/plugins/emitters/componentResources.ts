@@ -6,6 +6,10 @@ import { QuartzEmitterPlugin } from "../types"
 import spaRouterScript from "../../components/scripts/spa.inline"
 // @ts-ignore
 import popoverScript from "../../components/scripts/popover.inline"
+// @ts-ignore
+import lightboxScript from "../../components/scripts/lightbox.inline"
+// @ts-ignore
+import codeLanguageScript from "../../components/scripts/code-language.inline"
 import baseStyles from "../../styles/base.scss"
 import customStyles from "../../styles/custom.scss"
 import popoverStyle from "../../components/styles/popover.scss"
@@ -268,6 +272,10 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       document.dispatchEvent(event)
     `)
   }
+
+  componentResources.afterDOMLoaded.push(lightboxScript)
+
+  componentResources.afterDOMLoaded.push(codeLanguageScript)
 }
 
 // This emitter should not update the `resources` parameter. If it does, partial

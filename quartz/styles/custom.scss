@@ -127,26 +127,47 @@ h1.article-title::after {
   animation: blink 1s step-end infinite;
 }
 
+article h1,
+article h2,
+article h3 {
+  border-left: none;
+  padding-left: 0;
+  position: relative;
+  padding-bottom: 0.4em;
+}
+article h1::after,
+article h2::after,
+article h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+}
+article h1::after {
+  background: linear-gradient(90deg, #39ff14, transparent);
+}
+article h2::after {
+  background: linear-gradient(90deg, #2ee619, transparent);
+}
+article h3::after {
+  background: linear-gradient(90deg, #52b788, transparent);
+}
 article h1 {
   color: #39ff14;
   font-weight: 700;
   font-size: 1.8em;
-  border-left: 4px solid #39ff14;
-  padding-left: 0.5em;
 }
 article h2 {
   color: #2ee619;
   font-weight: 700;
   font-size: 1.5em;
-  border-left: 3px solid #2ee619;
-  padding-left: 0.5em;
 }
 article h3 {
   color: #52b788;
   font-weight: 600;
   font-size: 1.25em;
-  border-left: 2px solid #52b788;
-  padding-left: 0.5em;
 }
 article h4 {
   color: #3d9970;
@@ -193,6 +214,64 @@ article h4 {
   outline: 2px solid #39ff14;
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+// Explorer: distinct file items under folders
+.explorer .nav-file-title {
+  display: block;
+  padding: 0.2rem 0 0.2rem 0.1rem;
+  border-radius: 3px;
+  font-size: 0.92em;
+  color: #c9d6cf;
+  opacity: 1;
+  transition: color 0.15s ease, box-shadow 0.15s ease;
+
+  &::before {
+    content: "> ";
+    color: #39ff14;
+    font-weight: 700;
+  }
+
+  &:hover {
+    color: #39ff14;
+    text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+    box-shadow: inset 2px 0 0 #39ff14;
+  }
+
+  &.active,
+  &.is-active {
+    color: #39ff14;
+    box-shadow: inset 2px 0 0 #39ff14;
+    opacity: 1;
+  }
+}
+
+.explorer .tree-item-children > li + li {
+  border-top: 1px dashed rgba(82, 183, 136, 0.25);
+}
+
+// Mobile drawer (Explorer plugin burger toggle, <=800px)
+@media all and (max-width: 800px) {
+  .explorer .mobile-explorer {
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.15s ease;
+  }
+  .explorer .mobile-explorer:hover {
+    background: rgba(57, 255, 20, 0.12);
+  }
+  .explorer .mobile-explorer .lucide-menu {
+    stroke: #52b788;
+    transition: stroke 0.15s ease;
+  }
+  .explorer .mobile-explorer:hover .lucide-menu {
+    stroke: #39ff14;
+  }
+  .explorer:not(.collapsed) > .explorer-content {
+    background: #0a0e27;
+    border-right: 1px solid #1c2b24;
+    padding: 4rem 1rem 2rem 1rem;
+  }
 }
 
 .sidebar input[type="search"],
@@ -323,11 +402,30 @@ pre {
   padding: 1rem;
 }
 
-// Vertically center plugin clipboard button (it defaults to top-right)
-pre .clipboard-button {
+// Language label + copy button (Obsidian-style: faint text center-right, hover -> copy)
+.code-lang-label {
+  position: absolute;
   top: 50%;
-  right: 0.5rem;
   transform: translateY(-50%);
+  right: 0.6rem;
+  font-family: var(--codeFont, monospace);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  color: #5f8f76;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s ease, background 0.15s ease, padding 0.15s ease;
+}
+.code-lang-label::after { content: none; }
+
+pre:hover .code-lang-label {
+  color: #74c69d;
+  background: rgba(57, 255, 20, 0.12);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+.code-lang-label:hover {
+  background: rgba(57, 255, 20, 0.22);
 }
 
 pre code {
@@ -351,6 +449,10 @@ p code, li code, blockquote code {
 blockquote {
   border-left: 3px solid #52b788;
   color: #74c69d;
+}
+
+hr {
+  background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.35), transparent);
 }
 
 strong { color: var(--tertiary); }
@@ -415,6 +517,10 @@ em {
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.9em;
+}
+
+.callout strong {
+  color: var(--callout-color, #52b788);
 }
 
 .callout a {
@@ -514,7 +620,7 @@ body[data-slug="index"] {
   transform: translateY(0);
 
   strong {
-    color: #ebebec;
+    color: #2ee619;
     font-size: 1.05em;
   }
 }
@@ -629,16 +735,25 @@ body {
   border-bottom: 1px solid #1c2b24;
 }
 
-// Breadcrumbs as terminal path
+// Breadcrumbs as terminal path: ~/Writeups/HTB Academy: Footprinting
 .breadcrumb-container {
   font-family: var(--codeFont, monospace);
   font-size: 0.85em;
+  gap: 0;
 
   .breadcrumb-element {
     color: #8a8a8a;
 
     p {
+      margin-left: 0;
       color: #3a5a4a;
+      font-size: 0;
+    }
+
+    p::before {
+      content: "/";
+      font-size: 0.85rem;
+      color: #52b788;
     }
 
     a {
@@ -648,6 +763,16 @@ body {
         color: #39ff14;
         text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
       }
+    }
+  }
+
+  // Current page (last crumb) reads as active terminal dir
+  .breadcrumb-element:last-child a {
+    color: #39ff14;
+    text-shadow: 0 0 3px rgba(57, 255, 20, 0.3);
+
+    &:hover {
+      color: #39ff14;
     }
   }
 }
@@ -693,4 +818,59 @@ article {
   li {
     line-height: 1.75;
   }
+}
+
+// ============================================================================
+// Image Polish (styling + lightbox)
+// ============================================================================
+article img {
+  border: 1px solid #263831;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  cursor: zoom-in;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+article img:hover {
+  border-color: #3d9970;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 14px rgba(57, 255, 20, 0.12);
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(4, 6, 14, 0.88);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: zoom-out;
+}
+
+.lightbox-frame {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.lightbox-image {
+  max-width: 95vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border: 1px solid #263831;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(57, 255, 20, 0.15), 0 12px 48px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-frame figcaption {
+  font-family: var(--codeFont, monospace);
+  font-size: 0.8em;
+  color: #8a8a8a;
+}
+
+body.lightbox-open {
+  overflow: hidden;
 }

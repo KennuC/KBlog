@@ -20,19 +20,25 @@ title: Kennu | Pentest Blog
 I document hands-on offensive security work here from HTB Academy modules, CTF boxes, and methodology-driven write-ups as I work toward my CPTS certification.
 
 <div class="badge-row">
-<span class="badge">Nmap</span>
-<span class="badge">Burp Suite</span>
+<span class="badge">Footprinting</span>
+<span class="badge">Web Information Gathering</span>
+<span class="badge">Vulnerability Assessment</span>
 </div>
 
 **CPTS Progress: 20%** <span style="font-size:0.85em;color:#8a8a8a;">(started June 2026)</span> <div class="progress-track"><div class="progress-fill" style="width: 20%;"></div></div>
 
-<div class="hr-ascii">// ---------------------------------- //</div>
-
-
-## Latest Writeup
+---
+# Featured Writeups
 
 <a href="writeups/htb-academy-getting-started" class="featured-writeup">
 <strong>HTB Academy: Getting Started</strong><br/> <span style="font-size:0.85em;color:#8a8a8a;">RCE via CVE-2019-11231 → privilege escalation via sudo misconfig</span>
+</a>
+
+<a href="writeups/htb-academy-footprinting" class="featured-writeup">
+  <strong>HTB Academy: Footprinting</strong><br/>
+  <span style="font-size:0.85em;color:#8a8a8a;">Easy: FTP-exposed SSH key → shell access via public-key auth</span><br/>
+  <span style="font-size:0.85em;color:#8a8a8a;">Medium: NFS UID spoofing → SMB credential harvesting → MSSQL credential dump</span><br/>
+  <span style="font-size:0.85em;color:#8a8a8a;">Hard: SNMP OID walk → mail-delivered SSH key → MySQL credential dump</span>
 </a>
 
 <span style="font-size:0.85em;color:#8a8a8a;">More writeups coming soon as I progress through CPTS.</span>
