@@ -25,7 +25,7 @@ I document hands-on offensive security work here from HTB Academy modules, CTF b
 <span class="badge">Vulnerability Assessment</span>
 </div>
 
-**CPTS Progress: 20%** <span style="font-size:0.85em;color:#8a8a8a;">(started June 2026)</span> <div class="progress-track"><div class="progress-fill" style="width: 20%;"></div></div>
+**CPTS Progress: 25%** <span style="font-size:0.85em;color:#8a8a8a;">(started June 2026)</span> <div class="progress-track"><div class="progress-fill" style="width: 25%;"></div></div>
 
 ---
 # Featured Writeups
